@@ -1,0 +1,16 @@
+{
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "genre": {
+            "type": "text"
+        },
+        "species": {
+            "type": "text"
+        },
+        "location": {
+            "type": "geo_point"
+        }
+    }
+}
