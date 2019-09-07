@@ -9,9 +9,8 @@ import (
 func setupRouter() *gin.Engine {
 	r := gin.Default()
 
-	// Ping test
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
+	r.GET("/plants", func(c *gin.Context) {
+		c.String(http.StatusNoContent, "There are no plants in the primary storage")
 	})
 
 	return r
