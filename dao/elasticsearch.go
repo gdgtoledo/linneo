@@ -22,9 +22,9 @@ func getElasticsearchClient() (*es.Client, error) {
 
 	cfg := es.Config{
 		Addresses: []string{
-			"http://localhost:9200",
-			"http://localhost:9201",
-			"http://localhost:9202",
+			"http://elasticsearch:9200",
+			"http://elasticsearch2:9200",
+			"http://elasticsearch3:9200",
 		},
 	}
 	esClient, err := es.NewClient(cfg)
