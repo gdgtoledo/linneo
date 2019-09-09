@@ -22,7 +22,7 @@ func searchPlants(c *gin.Context) {
 	traceContextFields := apmlogrus.TraceContext(c)
 	log.WithFields(traceContextFields).Debug("handling request")
 
-	res, err := dao.Search("plants", map[string]interface{}{})
+	res, err := dao.Search(c, "plants", map[string]interface{}{})
 	log.WithFields(log.Fields{
 		"result": res,
 	}).Info("Query Result")
