@@ -31,7 +31,13 @@ func searchPlants(c *gin.Context) {
 			"error": err,
 		}).Error("Error querying database")
 	}
-	c.String(http.StatusNoContent, "There are no plants in the primary storage")
+
+	hits := res["hits"].(map[string]interface{})["hits"].([]interface{})
+	if len(hits) == 0 {
+		c.String(http.StatusNoContent, "There are no plants in the primary storage")
+	} else {
+		c.String(http.StatusOK, "YAY! There are %d plants in the primary storage", len(hits))
+	}
 }
 
 func setupRouter() *gin.Engine {
