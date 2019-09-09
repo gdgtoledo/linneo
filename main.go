@@ -7,9 +7,21 @@ import (
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"go.elastic.co/apm/module/apmgin"
+	"go.elastic.co/apm/module/apmlogrus"
 )
 
+func init() {
+	// apmlogrus.Hook will send "error", "panic", and "fatal"
+	// level log messages to Elastic APM.
+	log.AddHook(&apmlogrus.Hook{})
+}
+
 func searchPlants(c *gin.Context) {
+	// apmlogrus.TraceContext extracts the transaction and span (if any) from the given context,
+	// and returns logrus.Fields containing the trace, transaction, and span IDs.
+	traceContextFields := apmlogrus.TraceContext(c)
+	log.WithFields(traceContextFields).Debug("handling request")
+
 	res, err := dao.Search("plants", map[string]interface{}{})
 	log.WithFields(log.Fields{
 		"result": res,
