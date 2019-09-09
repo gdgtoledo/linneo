@@ -13,16 +13,7 @@ function initIndices() {
         -d @${ROOT_DIR}/mapping.json
 }
 
-function run() {
-    docker-compose -f ${ROOT_DIR}/docker/docker-compose.yml up -d
-}
-
 function main() {
-    run
-
-    # wait for elasticsearch to start up
-    sleep 60
-
     initIndices
 }
 
