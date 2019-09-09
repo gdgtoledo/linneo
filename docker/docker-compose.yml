@@ -4,6 +4,11 @@ services:
     build: ../
     image: gdgtoledo/linneo:1.0.0
     container_name: linneo
+    environment:
+      - ELASTIC_APM_SERVER_URL=http://apmserver:8200
+      - ELASTIC_APM_SERVICE_NAME=linneo
+      - ELASTIC_APM_SERVICE_VERSION=0.1.0
+      - ELASTIC_APM_CAPTURE_BODY=all
     ports:
       - 8080:8080
     networks:

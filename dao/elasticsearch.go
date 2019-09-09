@@ -2,11 +2,14 @@ package dao
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 
 	es "github.com/elastic/go-elasticsearch/v8"
 	log "github.com/sirupsen/logrus"
+	apmes "go.elastic.co/apm/module/apmelasticsearch"
 )
 
 var esInstance *es.Client
@@ -26,6 +29,7 @@ func getElasticsearchClient() (*es.Client, error) {
 			"http://elasticsearch2:9200",
 			"http://elasticsearch3:9200",
 		},
+		Transport: apmes.WrapRoundTripper(http.DefaultTransport),
 	}
 	esClient, err := es.NewClient(cfg)
 	if err != nil {
@@ -43,7 +47,7 @@ func getElasticsearchClient() (*es.Client, error) {
 }
 
 // Search executes a query in the proper index
-func Search(indexName string, query map[string]interface{}) (SearchResult, error) {
+func Search(ctx context.Context, indexName string, query map[string]interface{}) (SearchResult, error) {
 	result := SearchResult{}
 
 	esClient, err := getElasticsearchClient()
@@ -69,6 +73,7 @@ func Search(indexName string, query map[string]interface{}) (SearchResult, error
 		esClient.Search.WithBody(&buf),
 		esClient.Search.WithTrackTotalHits(true),
 		esClient.Search.WithPretty(),
+		esClient.Search.WithContext(ctx),
 	)
 	if err != nil {
 		log.WithFields(log.Fields{
