@@ -6,6 +6,7 @@ import (
 	"github.com/gdgtoledo/linneo/dao"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"go.elastic.co/apm/module/apmgin"
 )
 
 func searchPlants(c *gin.Context) {
@@ -23,6 +24,7 @@ func searchPlants(c *gin.Context) {
 
 func setupRouter() *gin.Engine {
 	r := gin.Default()
+	r.Use(apmgin.Middleware(r))
 
 	r.GET("/plants", searchPlants)
 
