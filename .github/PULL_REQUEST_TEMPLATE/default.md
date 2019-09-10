@@ -32,12 +32,13 @@
 
 - [ ] Mi código sigue las normas de estilo del proyecto
 - [ ] He realizado una auto-revisión de mi código
-- [ ] He comentado mi código, en particular las áreas difíciles de entender
+- [ ] Mi código expresa por sí sólo lo que quiere hacer, y sólo están comentados que aquellos fragmentos que lo necesitan
 - [ ] He actualizado la documentación
 - [ ] Mis cambios no generan nuevos warnings
 - [ ] He añadido tests que prueban, o bien que mi fix es efectivo, o que la funcionalidad funciona como se espera
 - [ ] Los tests (nuevos y existentes) pasan localmente tras mis cambios
 - [ ] Los cambios dependientes han sido mergeados y publicados en los proyectos relacionados (downstrean projects)
+- [ ] Creo que la descripción de esta PR tiene la documentación necesaria, capturas y/o videos, para entender su contexto
 
 ## Issues relacionadas
 
