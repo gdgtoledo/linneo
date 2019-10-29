@@ -1,5 +1,7 @@
 package plants
 
+import "context"
+
 // Model for an item
 type Model struct {
 	ID      string
@@ -12,6 +14,7 @@ type Model struct {
 // SearchQueryByIndexName struct
 type SearchQueryByIndexName struct {
 	IndexName string
+	Context   context.Context
 	Query     map[string]interface{}
 }
 
