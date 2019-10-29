@@ -38,6 +38,7 @@ func Search(query plants.SearchQueryByIndexName) (plants.SearchQueryByIndexNameR
 		esClient.Search.WithBody(&buf),
 		esClient.Search.WithTrackTotalHits(true),
 		esClient.Search.WithPretty(),
+		esClient.Search.WithContext(query.Context),
 	)
 	if err != nil {
 		log.WithFields(log.Fields{
