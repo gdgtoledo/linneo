@@ -1,52 +1,21 @@
-package dao
+package elastic
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
 
-	es "github.com/elastic/go-elasticsearch/v8"
+	"github.com/gdgtoledo/linneo/elastic"
+	"github.com/gdgtoledo/linneo/plants"
 	log "github.com/sirupsen/logrus"
 )
 
-var esInstance *es.Client
-
-// SearchResult wraps a search result
-type SearchResult map[string]interface{}
-
-// getElasticsearchClient returns a client connected to the running elasticseach cluster
-func getElasticsearchClient() (*es.Client, error) {
-	if esInstance != nil {
-		return esInstance, nil
-	}
-
-	cfg := es.Config{
-		Addresses: []string{
-			"http://elasticsearch:9200",
-			"http://elasticsearch2:9200",
-			"http://elasticsearch3:9200",
-		},
-	}
-	esClient, err := es.NewClient(cfg)
-	if err != nil {
-		log.WithFields(log.Fields{
-			"config": cfg,
-			"error":  err,
-		}).Error("Could not obtain an Elasticsearch client")
-
-		return nil, err
-	}
-
-	esInstance = esClient
-
-	return esInstance, nil
-}
-
 // Search executes a query in the proper index
-func Search(indexName string, query map[string]interface{}) (SearchResult, error) {
-	result := SearchResult{}
+func Search(query plants.SearchQueryByIndexName) (plants.SearchQueryByIndexNameResult, error) {
+	result := plants.SearchQueryByIndexNameResult{}
 
-	esClient, err := getElasticsearchClient()
+	esClient, err := elastic.GetClient()
+
 	if err != nil {
 		return result, err
 	}
@@ -65,7 +34,7 @@ func Search(indexName string, query map[string]interface{}) (SearchResult, error
 	}).Debug("Elasticsearch query")
 
 	res, err := esClient.Search(
-		esClient.Search.WithIndex(indexName),
+		esClient.Search.WithIndex(query.IndexName),
 		esClient.Search.WithBody(&buf),
 		esClient.Search.WithTrackTotalHits(true),
 		esClient.Search.WithPretty(),
