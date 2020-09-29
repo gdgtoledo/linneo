@@ -8,5 +8,5 @@ require (
 	github.com/sirupsen/logrus v1.4.2
 	go.elastic.co/apm/module/apmelasticsearch v1.5.0
 	go.elastic.co/apm/module/apmgin v1.5.0
-	go.elastic.co/apm/module/apmlogrus v1.5.0
+	go.elastic.co/apm/module/apmlogrus v1.5.0 // indirect
 )
