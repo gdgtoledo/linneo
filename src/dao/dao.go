@@ -1,18 +1,24 @@
 package dao
 
 import (
-	"github.com/gdgtoledo/linneo/src/domain"
+	domain "github.com/gdgtoledo/linneo/src/plants"
 )
 
-// Dao interface for the data access object
-type Dao interface {
-	Search() (Response, error)
-	Delete() (Response, error)
-}
+// Query to Dao search
+type Query string
 
-// Response to a Dao action
+// ID to Dao delete
+type ID string
+
+// Response to Dao action
 type Response struct {
 	message  string
 	status   int
 	response domain.Plants
+}
+
+// Interface to the data access object
+type Interface interface {
+	Search(query Query) (Response, error)
+	Delete(id ID) (Response, error)
 }

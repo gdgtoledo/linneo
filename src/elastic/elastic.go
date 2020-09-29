@@ -4,14 +4,20 @@ import (
 	"net/http"
 
 	es "github.com/elastic/go-elasticsearch/v8"
+	"github.com/gdgtoledo/linneo/src/dao"
 	log "github.com/sirupsen/logrus"
 	apmes "go.elastic.co/apm/module/apmelasticsearch"
 )
 
+// DataObjectModel type to elastic Dao
+type DataObjectModel struct {
+	client *es.Client
+}
+
 var esClient *es.Client
+
 var esClientError error
 
-// getElasticsearchClient returns a client connected to the running elasticseach cluster
 func getClient() (*es.Client, error) {
 	var esInstance *es.Client
 
@@ -44,6 +50,11 @@ func getClient() (*es.Client, error) {
 	return esInstance, nil
 }
 
-func init() {
+func get() dao.Interface {
+	var edao dao.Interface
+
 	esClient, esClientError = getClient()
+	edao = DataObjectModel{client: esClient}
+
+	return edao
 }
